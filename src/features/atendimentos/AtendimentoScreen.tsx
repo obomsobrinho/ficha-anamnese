@@ -20,7 +20,8 @@ const styleKey = (st: PartState) => (st === 'Feito' ? 'feito' : st === 'Em andam
 export function useAtendimentoView(aid: string | undefined) {
   const { data: a, isPending } = useAtendimento(aid)
   const { data: p } = usePaciente(a?.paciente_id)
-  const P = patientView(p)
+  // Blank while the patient row loads, never the "Novo paciente" placeholder.
+  const P = p ? patientView(p) : { ...patientView(null), displayName: '', first: '' }
   const M = a ? PROCEDIMENTOS[a.procedimento] : PROCEDIMENTOS.endodontia
   const ts = a?.dentes || []
   const pl = ts.length > 1
