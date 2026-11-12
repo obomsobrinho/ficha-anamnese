@@ -1,10 +1,10 @@
-import { Navigate, Outlet, ScrollRestoration } from 'react-router'
+import { Navigate, Outlet, ScrollRestoration, useLocation } from 'react-router'
 import { useAuth } from '@/features/auth/AuthProvider'
 
 /** Centered column: full screen on a phone, at most 430 px on wider screens. */
 export function Frame() {
   return (
-    <div className="mx-auto min-h-dvh max-w-[430px] bg-cream sm:shadow-[0_0_40px_rgba(60,40,30,.08)]">
+    <div className="mx-auto min-h-dvh max-w-[430px] bg-cream sm:shadow-[0_0_40px_rgba(60,40,30,.08)] print:min-h-0 print:max-w-none print:bg-white print:shadow-none">
       <Outlet />
       <ScrollRestoration />
     </div>
@@ -14,6 +14,7 @@ export function Frame() {
 /** Renders immediately; only redirects once we know there is no session. */
 export function RequireAuth() {
   const { signedIn } = useAuth()
-  if (!signedIn) return <Navigate to="/entrar" replace />
+  const location = useLocation()
+  if (!signedIn) return <Navigate to="/entrar" replace state={{ from: location.pathname }} />
   return <Outlet />
 }

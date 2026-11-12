@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Navigate } from 'react-router'
+import { Navigate, useLocation } from 'react-router'
 import { z } from 'zod'
 import { Field, PrimaryButton, Segmented, TextInput } from '@/components/ui'
 import { supabase, supabaseConfigured } from '@/lib/supabase'
@@ -31,6 +31,7 @@ function translate(message: string): string {
 
 export function AuthScreen() {
   const { signedIn } = useAuth()
+  const from = (useLocation().state as { from?: string } | null)?.from
   const [mode, setMode] = useState<Mode>('Entrar')
   const [serverError, setServerError] = useState('')
   const isSignup = mode === 'Criar conta'
@@ -42,7 +43,7 @@ export function AuthScreen() {
   const { register, handleSubmit, formState } = form
   const err = formState.errors
 
-  if (signedIn) return <Navigate to="/" replace />
+  if (signedIn) return <Navigate to={from && from !== '/entrar' ? from : '/'} replace />
 
   const onSubmit = handleSubmit(async (v) => {
     setServerError('')
@@ -67,7 +68,7 @@ export function AuthScreen() {
   const firstError = err.nome?.message || err.email?.message || err.senha?.message || serverError
 
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="pt-safe flex min-h-dvh flex-col">
       <form onSubmit={onSubmit} noValidate className="flex flex-1 flex-col gap-3.5 px-5 pt-10 pb-10">
         <span className="flex h-[26px] items-center self-start rounded-[13px] bg-sand px-2.5 text-xs text-muted2">
           Versão de teste

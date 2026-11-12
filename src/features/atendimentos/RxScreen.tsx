@@ -112,7 +112,7 @@ export function RxScreen({ kind }: { kind: 'rxi' | 'rxf' }) {
                   value={noteOf(x)}
                   onChange={(e) => setNotes((n) => ({ ...n, [x.id]: e.target.value }))}
                   placeholder="Observação (opcional)"
-                  className="h-[46px] rounded-xl border border-field bg-cream px-3 text-[15px]"
+                  className="h-[46px] rounded-xl border border-field bg-cream px-3 text-base"
                 />
               </div>
             )
