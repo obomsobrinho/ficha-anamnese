@@ -12,7 +12,15 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <PersistQueryClientProvider
       client={queryClient}
-      persistOptions={{ persister, maxAge: 1000 * 60 * 60 * 24, buster: 'v1' }}
+      persistOptions={{
+        persister,
+        maxAge: 1000 * 60 * 60 * 24,
+        buster: 'v1',
+        // Signed image URLs expire; never restore them from storage.
+        dehydrateOptions: {
+          shouldDehydrateQuery: (q) => q.state.status === 'success' && q.queryKey[0] !== 'signed',
+        },
+      }}
     >
       <AuthProvider>
         <RouterProvider router={router} />

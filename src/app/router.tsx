@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router'
 import { AtendimentoScreen } from '@/features/atendimentos/AtendimentoScreen'
 import { ExameScreen } from '@/features/atendimentos/ExameScreen'
+import { RxScreen } from '@/features/atendimentos/RxScreen'
 import { CriarAposSaude, DentesScreen, ProcScreen } from '@/features/atendimentos/NovoScreens'
 import { AuthScreen } from '@/features/auth/AuthScreen'
 import { PacienteScreen } from '@/features/pacientes/PacienteScreen'
@@ -25,6 +26,8 @@ export const router = createBrowserRouter([
           { path: '/pacientes/:pid/novo/criar', element: <CriarAposSaude /> },
           { path: '/atendimentos/:aid', element: <AtendimentoScreen /> },
           { path: '/atendimentos/:aid/exame', element: <ExameScreen /> },
+          { path: '/atendimentos/:aid/rxi', element: <RxScreen key="rxi" kind="rxi" /> },
+          { path: '/atendimentos/:aid/rxf', element: <RxScreen key="rxf" kind="rxf" /> },
         ],
       },
       { path: '*', element: <Navigate to="/" replace /> },
