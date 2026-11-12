@@ -5,9 +5,7 @@ import { useAuth } from '@/features/auth/AuthProvider'
 export function Frame() {
   return (
     <div className="mx-auto min-h-dvh max-w-[430px] bg-cream sm:shadow-[0_0_40px_rgba(60,40,30,.08)]">
-      <div className="pt-safe">
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   )
 }

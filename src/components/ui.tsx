@@ -18,7 +18,9 @@ export function PrimaryButton({ className, disabled, ...p }: ButtonHTMLAttribute
 
 export function FooterBar({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={cn('pb-safe flex-none border-t border-divider bg-cream px-5 pt-3', className)}>{children}</div>
+    <div className={cn('pb-safe sticky bottom-0 z-10 flex-none border-t border-divider bg-cream px-5 pt-3', className)}>
+      {children}
+    </div>
   )
 }
 
