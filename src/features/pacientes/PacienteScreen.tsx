@@ -25,6 +25,14 @@ export function PacienteScreen() {
   })
   const openAt = (t: AtendimentoLite) => navigate(`/atendimentos/${t.id}`)
 
+  if (!isPending && !p)
+    return (
+      <Screen>
+        <TextBack label="Pacientes" onClick={back} />
+        <div className="px-5 py-8 text-center text-[15px] text-muted">Nenhum paciente encontrado.</div>
+      </Screen>
+    )
+
   return (
     <Screen>
       <TextBack label="Pacientes" onClick={back} />

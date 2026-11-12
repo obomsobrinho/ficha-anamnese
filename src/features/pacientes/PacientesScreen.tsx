@@ -90,7 +90,7 @@ export function PacientesScreen() {
       <div className="flex flex-col gap-3.5 px-5">
         <div className="flex items-baseline justify-between">
           <div className="font-serif text-[34px] font-medium">Pacientes</div>
-          <div className="text-[13px] text-muted">{data ? `${data.length} fichas` : ''}</div>
+          <div className="text-[13px] text-muted">{data ? `${data.length} ${data.length === 1 ? 'ficha' : 'fichas'}` : ''}</div>
         </div>
         <div className="flex h-[50px] items-center gap-2.5 rounded-[14px] bg-sand px-4">
           <span className="size-3.5 flex-none rounded-full border-2 border-muted" />
