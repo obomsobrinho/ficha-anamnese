@@ -1,0 +1,80 @@
+@import 'tailwindcss';
+
+/* Tokens ported 1:1 from the prototype (Ficha Endodôntica Protótipo v2) */
+@theme {
+  --font-sans: 'Jost', system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
+
+  --color-page: #efe7e1;
+  --color-cream: #fffcf6;
+  --color-ink: #3a2f2a;
+  --color-dark: #2b2421;
+  --color-terra: #a3604b;
+  --color-terra-dark: #7a4433;
+  --color-terra-mid: #b5715c;
+  --color-sand: #f4ece6;
+  --color-panel: #f8f1ec;
+  --color-hover: #f6eee8;
+  --color-sel: #f6eae3;
+  --color-avatar: #eadbd2;
+  --color-line: #eadbd2;
+  --color-field: #e3d6ce;
+  --color-divider: #efe4dc;
+  --color-row: #f1e7e0;
+  --color-dash: #dfc9be;
+  --color-border-hover: #d9b9aa;
+  --color-muted: #8b7f79;
+  --color-muted2: #6e625c;
+  --color-chev: #b5a79f;
+  --color-radio-off: #cdbdb3;
+  --color-disabled: #cdb3a7;
+  --color-alert-bg: #f6ddd5;
+  --color-alert-fg: #8a3a28;
+}
+
+@layer base {
+  html,
+  body {
+    margin: 0;
+    background: var(--color-page);
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  input,
+  textarea,
+  button {
+    font-family: inherit;
+    color: inherit;
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: 2px solid #b5715c;
+    outline-offset: -1px;
+  }
+
+  a {
+    color: #a3604b;
+  }
+}
+
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+@utility pb-safe {
+  padding-bottom: max(34px, env(safe-area-inset-bottom));
+}
+
+@keyframes pulse-soft {
+  50% {
+    opacity: 0.55;
+  }
+}
+.skeleton {
+  background: var(--color-sand);
+  border-radius: 10px;
+  animation: pulse-soft 1.4s ease-in-out infinite;
+}

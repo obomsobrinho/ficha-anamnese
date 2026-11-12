@@ -1,0 +1,10 @@
+node_modules
+dist
+.vercel
+.env.local
+.env.*.local
+*.tsbuildinfo
+.DS_Store
+
+# Claude Design export (carries the dentist's printed form). Read-only reference.
+design-reference/
