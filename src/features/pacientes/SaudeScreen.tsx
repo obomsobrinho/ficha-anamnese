@@ -6,7 +6,7 @@ import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { Screen, TopBar, useBack } from '@/components/layout'
 import { Chip, Field, FooterBar, PrimaryButton, SectionLabel, Segmented, TextArea, TextInput } from '@/components/ui'
 import { useDeletePaciente, usePaciente, useSaveSaude } from '@/data/pacientes'
-import { brToISO, calcAge, isoToBR, maskDate } from '@/lib/dates'
+import { brToISO, calcAge, isEmail, isoToBR, maskDate, maskPhone } from '@/lib/dates'
 import { DOENCAS, ESTADOS_CIVIS, SEXOS, YN_QUESTIONS, blankDados, type PacienteDados } from '@/types'
 import { patientView } from './view'
 
@@ -65,6 +65,10 @@ export function SaudeScreen() {
       toast.error('Digite o nome do paciente.')
       return
     }
+    if (!isEmail(f.dados.email)) {
+      toast.error('Confira o e-mail do paciente.')
+      return
+    }
     save.mutate({ id, isNew, nome, nascimento: brToISO(f.birth), telefone: f.telefone.trim() || null, dados: f.dados })
     if (after?.then === 'create') navigate(`/pacientes/${id}/novo/criar`, { replace: true, state: after })
     else if (isNew) navigate(`/pacientes/${id}`, { replace: true })
@@ -117,10 +121,24 @@ export function SaudeScreen() {
             <TextInput value={d.prof} onChange={(e) => set('prof', e.target.value)} />
           </Field>
           <Field label="Telefone">
-            <TextInput {...register('telefone')} inputMode="tel" />
+            <TextInput
+              {...register('telefone', { onChange: (e) => setValue('telefone', maskPhone(e.target.value)) })}
+              inputMode="tel"
+              placeholder="(00) 00000-0000"
+            />
           </Field>
           <Field label="E-mail">
-            <TextInput value={d.email} onChange={(e) => set('email', e.target.value)} inputMode="email" autoCapitalize="none" />
+            <TextInput
+              value={d.email}
+              onChange={(e) => set('email', e.target.value.trim())}
+              type="email"
+              inputMode="email"
+              autoCapitalize="none"
+              autoCorrect="off"
+              placeholder="nome@email.com"
+              style={!isEmail(d.email) ? { borderColor: '#8A3A28' } : undefined}
+            />
+            {!isEmail(d.email) && <span className="text-xs text-alert-fg">E-mail incompleto ou inválido.</span>}
           </Field>
           <Field label="Cidade/Endereço">
             <TextInput value={d.city} onChange={(e) => set('city', e.target.value)} />

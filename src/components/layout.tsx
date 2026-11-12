@@ -32,16 +32,16 @@ export function TopBar({
 }) {
   return (
     <div className="pt-safe sticky top-0 z-10 flex-none border-b border-divider bg-cream">
-      <div className="flex items-center gap-1.5 px-2.5 pb-3">
+      <div className="flex items-center gap-2 px-2.5 pt-2.5 pb-3.5 md:px-6">
         <BackChevron onClick={onBack} />
         {badge != null && (
-          <div className="box-border flex h-10 min-w-10 flex-none items-center justify-center rounded-[11px] bg-terra px-1.5 text-base font-medium text-white">
+          <div className="box-border flex h-[46px] min-w-[46px] flex-none items-center justify-center rounded-[13px] bg-terra px-2 text-lg font-medium text-white">
             {badge}
           </div>
         )}
-        <div className="flex min-w-0 flex-1 flex-col">
-          <span className="truncate text-[17px] font-medium">{title}</span>
-          {subtitle != null && <span className="truncate text-xs text-muted">{subtitle}</span>}
+        <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <span className="truncate text-xl leading-tight font-medium">{title}</span>
+          {subtitle != null && <span className="truncate text-[13px] text-muted">{subtitle}</span>}
         </div>
       </div>
     </div>
@@ -67,7 +67,7 @@ export function TextBack({ label, onClick }: { label: string; onClick: () => voi
 /** The floating primary action pinned at the bottom (Nova ficha, Novo atendimento). */
 export function FloatingAction({ children }: { children: ReactNode }) {
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-10 mx-auto max-w-[430px] px-5 pb-[max(34px,env(safe-area-inset-bottom))]">
+    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-10 mx-auto max-w-[430px] bg-gradient-to-t from-cream from-55% via-cream/85 to-cream/0 px-5 pt-14 pb-[max(34px,env(safe-area-inset-bottom))] md:max-w-[680px] md:px-10">
       <div className="pointer-events-auto">{children}</div>
     </div>
   )

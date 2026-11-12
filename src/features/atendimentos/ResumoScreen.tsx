@@ -99,9 +99,9 @@ export function ResumoScreen() {
   return (
     <Screen className="print:min-h-0">
       <div className="pt-safe sticky top-0 z-10 flex-none border-b border-divider bg-cream print:hidden">
-        <div className="flex items-center px-2.5 pb-2.5">
+        <div className="flex items-center px-2.5 pt-2.5 pb-3.5">
           <BackChevron onClick={back} />
-          <div className="flex-1 pr-11 text-center text-base font-medium">Resumo do atendimento</div>
+          <div className="flex-1 pr-11 text-center text-xl font-medium">Resumo do atendimento</div>
         </div>
       </div>
       <div className="flex flex-col gap-6 px-[22px] pt-[22px] pb-[120px] print:px-0 print:pt-0 print:pb-0">
@@ -195,7 +195,7 @@ export function ResumoScreen() {
           </>
         )}
       </div>
-      <div className="pb-safe fixed inset-x-0 bottom-0 z-10 mx-auto flex max-w-[430px] gap-2.5 border-t border-divider bg-cream px-5 pt-3 print:hidden">
+      <div className="pb-safe fixed inset-x-0 bottom-0 z-10 mx-auto flex max-w-[430px] gap-2.5 border-t border-divider bg-cream px-5 pt-3 md:max-w-[680px] md:px-10 print:hidden">
         <button
           type="button"
           onClick={print}

@@ -39,14 +39,11 @@ export const PROCEDIMENTOS = {
     parts: ['exame', 'rxi', 'termo', 'trat', 'rxf'] as const,
   },
 } as const
-/** Shown disabled with the "Em breve" badge, as approved by the owner on 12/11/2026. */
+/** Shown disabled with the "Em breve" badge (owner's list A, 12/11/2026). */
 export const PROCEDIMENTOS_EM_BREVE = [
   { name: 'Restauração', desc: 'Um ou mais dentes' },
   { name: 'Cirurgia', desc: 'Um ou mais dentes' },
-  { name: 'Periodontia', desc: 'Um ou mais dentes' },
-  { name: 'Prótese', desc: 'Um ou mais dentes' },
-  { name: 'Implante', desc: 'Um ou mais dentes' },
-  { name: 'Personalizado', desc: 'Monte a anamnese do seu jeito' },
+  { name: 'Endodontia personalizada', desc: 'Monte a anamnese do seu jeito' },
 ] as const
 
 // ---------- File types (arquivos.tipo) ----------

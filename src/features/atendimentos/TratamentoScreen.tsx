@@ -2,7 +2,7 @@ import { useParams } from 'react-router'
 import { Screen, TopBar, useBack } from '@/components/layout'
 import { Chip, Field, FooterBar, PrimaryButton, RadioOption, Skeleton, TextArea, TextInput } from '@/components/ui'
 import { useSavePart } from '@/data/atendimentos'
-import { maskDate, todayBR } from '@/lib/dates'
+import { maskDate, maskDecimal, todayBR } from '@/lib/dates'
 import { toothName } from '@/lib/teeth'
 import { IRRIGACAO, TECNICAS, TIPOS_TRATAMENTO, type CanalRow, type TratData } from '@/types'
 import { useAtendimentoView } from './AtendimentoScreen'
@@ -99,7 +99,7 @@ export function TratamentoScreen() {
                   </div>
                   {rowsOf(tr, n).map((c, i) => {
                     const u = (f: keyof CanalRow) => (e: React.ChangeEvent<HTMLInputElement>) => {
-                      const v = e.target.value
+                      const v = f === 'cad' || f === 'crd' ? maskDecimal(e.target.value) : e.target.value
                       setRows(n, (r) => r.map((x, j) => (j === i ? { ...x, [f]: v } : x)))
                     }
                     return (
@@ -168,7 +168,7 @@ export function TratamentoScreen() {
                   NaOCl
                   <input
                     value={tr.naocl}
-                    onChange={(e) => set({ naocl: e.target.value })}
+                    onChange={(e) => set({ naocl: maskDecimal(e.target.value) })}
                     inputMode="decimal"
                     className="h-11 w-[72px] rounded-xl border border-field bg-white text-center text-base"
                   />

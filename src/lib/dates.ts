@@ -51,6 +51,25 @@ export function calcAge(br: string | null | undefined, now = new Date()) {
   return a >= 0 && a < 130 ? a : null
 }
 
+/** Brazilian phone: (00) 0000-0000 or (00) 00000-0000. */
+export function maskPhone(v: string) {
+  const d = v.replace(/\D/g, '').slice(0, 11)
+  if (!d) return ''
+  if (d.length <= 2) return `(${d}`
+  if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`
+  if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`
+  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`
+}
+
+/** Millimetres and percentages: digits and one comma. */
+export function maskDecimal(v: string) {
+  const s = v.replace(/\./g, ',').replace(/[^\d,]/g, '')
+  const i = s.indexOf(',')
+  return i < 0 ? s : s.slice(0, i + 1) + s.slice(i + 1).replace(/,/g, '').slice(0, 2)
+}
+
+export const isEmail = (v: string) => !v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())
+
 /** Types digits as dd/mm/aaaa. */
 export function maskDate(v: string) {
   const d = v.replace(/\D/g, '').slice(0, 8)

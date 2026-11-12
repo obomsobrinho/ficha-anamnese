@@ -38,15 +38,13 @@ export function ProcScreen() {
           <div
             key={m.name}
             aria-disabled
-            className="flex items-center gap-3.5 rounded-[18px] border border-line bg-white px-4 py-[18px]"
+            className="flex items-center gap-3 rounded-2xl border border-line bg-cream px-4 py-3 opacity-80"
           >
-            <div className="flex min-w-0 flex-1 flex-col gap-1">
-              <div className="text-lg font-medium text-muted2">{m.name}</div>
-              <div className="text-[13px] leading-[1.4] text-pretty text-muted2">{m.desc}</div>
-              <span className="mt-1.5 flex h-[26px] items-center self-start rounded-[13px] bg-sand px-2.5 text-xs text-muted2">
-                Em breve
-              </span>
+            <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+              <div className="text-base font-medium text-muted2">{m.name}</div>
+              <div className="text-xs leading-[1.4] text-pretty text-muted">{m.desc}</div>
             </div>
+            <span className="flex h-6 flex-none items-center rounded-xl bg-sand px-2.5 text-xs text-muted2">Em breve</span>
           </div>
         ))}
       </div>
@@ -128,7 +126,7 @@ export function DentesScreen() {
             }
           }}
         />
-        <div className="-mx-1 -mt-1 min-h-[400px] flex-none">
+        <div className="-mx-1 -mt-1 min-h-[400px] flex-none md:mx-auto md:w-full md:max-w-[460px]">
           <ToothChart dent={dent} sel={sel} marks={marksOf(p)} onPick={(n) => setSel(sel === n ? null : n)} />
         </div>
         {sel == null ? (

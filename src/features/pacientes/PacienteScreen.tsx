@@ -86,7 +86,7 @@ export function PacienteScreen() {
               </span>
             </div>
           </div>
-          <div className="px-[22px] pt-1">
+          <div className="mx-auto w-full px-[22px] pt-1 md:max-w-[420px]">
             <ToothChart
               dent="perm"
               sel={null}

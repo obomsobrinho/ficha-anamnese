@@ -88,7 +88,7 @@ export function RxScreen({ kind }: { kind: 'rxi' | 'rxf' }) {
               <div key={x.id} className="flex flex-col gap-2.5 rounded-[18px] border border-line bg-white p-3">
                 <div
                   onClick={() => setViewer({ id: x.id, src, date, note: noteOf(x) })}
-                  className="relative flex h-[200px] cursor-zoom-in items-center justify-center overflow-hidden rounded-xl bg-dark text-sm text-muted"
+                  className="relative flex h-[200px] cursor-zoom-in md:h-[320px] items-center justify-center overflow-hidden rounded-xl bg-dark text-sm text-muted"
                 >
                   <RxImage id={x.id} src={src} />
                   {(x.pending || x.failed) && (

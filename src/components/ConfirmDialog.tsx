@@ -21,7 +21,7 @@ export function ConfirmDialog({
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-40 bg-[rgba(43,36,33,.45)]" />
-        <Dialog.Content className="fixed inset-x-0 bottom-0 z-50 mx-auto flex max-w-[430px] flex-col gap-4 rounded-t-[28px] bg-cream px-[22px] pt-2.5 pb-[max(34px,env(safe-area-inset-bottom))] outline-none">
+        <Dialog.Content className="fixed inset-x-0 bottom-0 z-50 mx-auto flex max-w-[430px] flex-col md:max-w-[560px] gap-4 rounded-t-[28px] bg-cream px-[22px] pt-2.5 pb-[max(34px,env(safe-area-inset-bottom))] outline-none">
           <div className="h-[5px] w-10 self-center rounded-[3px] bg-dash" />
           <Dialog.Title className="m-0 font-serif text-[28px] leading-[1.15] font-medium text-pretty">{title}</Dialog.Title>
           <Dialog.Description className="m-0 text-base leading-normal text-muted2">{body}</Dialog.Description>

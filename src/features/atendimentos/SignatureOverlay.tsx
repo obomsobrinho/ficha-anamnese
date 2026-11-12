@@ -3,7 +3,8 @@ import { createPortal } from 'react-dom'
 
 /** True while the viewport is portrait (the phone's rotation lock keeps it so even when held sideways). */
 function usePortrait() {
-  const q = '(orientation: portrait)'
+  // Phones only: a tablet in portrait is already wide enough to sign.
+  const q = '(orientation: portrait) and (max-width: 599px)'
   const [portrait, setPortrait] = useState(() => window.matchMedia(q).matches)
   useEffect(() => {
     const m = window.matchMedia(q)

@@ -32,7 +32,7 @@ export function RxViewer({ item, onClose }: { item: ViewerItem | null; onClose: 
       <Dialog.Portal>
         <Dialog.Content
           aria-describedby={undefined}
-          className="fixed inset-0 z-50 mx-auto flex max-w-[430px] flex-col bg-black outline-none"
+          className="fixed inset-0 z-50 mx-auto flex max-w-[430px] flex-col bg-black md:max-w-none outline-none"
         >
           <Dialog.Title className="sr-only">Radiografia</Dialog.Title>
           <div className="pt-safe flex-none">

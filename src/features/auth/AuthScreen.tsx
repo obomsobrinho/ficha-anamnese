@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Navigate, useLocation } from 'react-router'
 import { z } from 'zod'
 import { Field, PrimaryButton, Segmented, TextInput } from '@/components/ui'
+import { maskPhone } from '@/lib/dates'
 import { supabase, supabaseConfigured } from '@/lib/supabase'
 import { useAuth } from './AuthProvider'
 
@@ -97,7 +98,12 @@ export function AuthScreen() {
               <TextInput {...register('cro')} placeholder="Ex.: CRO-MG 72033" />
             </Field>
             <Field label="Telefone">
-              <TextInput {...register('telefone')} inputMode="tel" autoComplete="tel" />
+              <TextInput
+                {...register('telefone', { onChange: (e) => form.setValue('telefone', maskPhone(e.target.value)) })}
+                inputMode="tel"
+                autoComplete="tel"
+                placeholder="(00) 00000-0000"
+              />
             </Field>
           </>
         )}

@@ -138,7 +138,7 @@ export function BackChevron({ onClick }: { onClick: () => void }) {
       type="button"
       onClick={onClick}
       aria-label="Voltar"
-      className="size-11 cursor-pointer border-0 bg-transparent text-[30px] font-light text-terra"
+      className="size-11 flex-none cursor-pointer border-0 bg-transparent text-[36px] leading-none font-light text-terra"
     >
       ‹
     </button>
