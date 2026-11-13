@@ -100,7 +100,7 @@ export function ResumoScreen() {
   return (
     <Screen className="print:min-h-0">
       <div className="pt-safe sticky top-0 z-10 flex-none border-b border-divider bg-cream print:hidden">
-        <div className="flex items-center px-2.5 pt-2.5 pb-3.5">
+        <div className="flex items-center px-2.5 pt-3.5 pb-3.5">
           <BackChevron onClick={back} />
           <div className="flex-1 pr-11 text-center text-xl font-medium">Resumo do atendimento</div>
         </div>

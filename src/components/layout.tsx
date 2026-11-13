@@ -32,7 +32,7 @@ export function TopBar({
 }) {
   return (
     <div className="pt-safe sticky top-0 z-10 flex-none border-b border-divider bg-cream">
-      <div className="flex items-center gap-2 px-2.5 pt-2.5 pb-3.5 md:px-6">
+      <div className="flex items-center gap-2 px-2.5 pt-3.5 pb-3.5 md:px-6">
         <BackChevron onClick={onBack} />
         {badge != null && (
           <div className="box-border flex h-[46px] min-w-[46px] flex-none items-center justify-center rounded-[13px] bg-terra px-2 text-lg font-medium text-white">
