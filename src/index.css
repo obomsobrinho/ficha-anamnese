@@ -97,6 +97,75 @@
 }
 
 /* ---------- x-ray editor (react-filerobot-image-editor) ---------- */
+/* Our own top bar and tab bar replace the editor's; its buttons stay in the DOM and are clicked from ours. */
+.rx-editor .FIE_topbar,
+.rx-editor .FIE_tabs-drawer,
+.rx-editor div:has(> .FIE_tab),
+.rx-editor [data-testid='FIE-annotation-option-triggerer-shadow'] {
+  display: none !important;
+}
+.rx-editor .FIE_root,
+.rx-editor .FIE_main-container,
+.rx-editor .FIE_editor-content {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+/* Dark stage around the image, like a phone gallery: the x-ray reads better. */
+.rx-editor .FIE_canvas-container {
+  background: #141110 !important;
+}
+.rx-editor .FIE_canvas-node {
+  background: transparent !important;
+}
+/* Bottom panel: one row with our color slot next to the tool options, then the tools. */
+.rx-editor .FIE_tools-bar-wrapper {
+  display: flex !important;
+  flex-flow: row wrap !important;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  /* Same height on every tab, so the image does not jump when switching. */
+  min-height: 112px;
+  padding: 4px 0 0 !important;
+  max-height: none !important;
+}
+.rx-editor .rx-lead:empty {
+  display: none;
+}
+.rx-editor .FIE_tool-options-wrapper {
+  flex: 0 1 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  min-height: 48px;
+  max-height: none !important;
+  padding: 0 !important;
+}
+.rx-editor .FIE_tool-options-wrapper:empty {
+  display: none;
+}
+.rx-editor .rx-lead {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+}
+.rx-editor .FIE_tools-bar {
+  flex-basis: 100%;
+  padding: 0 0 4px !important;
+}
+/* Phones: icon-only tools so all six fit in one row without a carousel. */
+@media (max-width: 640px) {
+  .rx-editor .FIE_tools-item-wrapper [data-testid^='FIE-tools-bar-item-button-'] > :not(svg) {
+    display: none;
+  }
+  .rx-editor .FIE_tools-item-wrapper [data-testid^='FIE-tools-bar-item-button-'] {
+    padding: 8px 12px !important;
+  }
+  .rx-editor .FIE_tools-item-wrapper [data-testid^='FIE-tools-bar-item-button-'] svg {
+    width: 20px;
+    height: 20px;
+  }
+}
 /* Shapes are outlines only: hide the fill picker of circle and rectangle. */
 .rx-editor .FIE_ellipse-tool-options .FIE_color-picker-triggerer,
 .rx-editor .FIE_rect-tool-options .FIE_color-picker-triggerer {
