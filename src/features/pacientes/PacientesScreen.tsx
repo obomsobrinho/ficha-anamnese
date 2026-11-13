@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
+import { DentraIcon } from '@/components/Brand'
 import { FloatingAction, Screen } from '@/components/layout'
 import { PrimaryButton, Skeleton } from '@/components/ui'
 import { usePacientes, type PacienteRow } from '@/data/pacientes'
@@ -15,7 +16,7 @@ export function ProfHeader() {
   return (
     <div className="pt-safe">
       <div className="flex items-center gap-3 px-5 pt-2.5 pb-[18px]">
-        <div className="box-border size-12 flex-none rounded-full border border-line bg-sand p-[9px]" />
+        <DentraIcon size={48} />
         <div className="flex min-w-0 flex-1 flex-col gap-0.5">
           {isPending && !prof ? (
             <>

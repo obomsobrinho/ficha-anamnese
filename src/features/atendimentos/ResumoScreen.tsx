@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useParams } from 'react-router'
+import { DentraIcon } from '@/components/Brand'
 import { RxImage, RxViewer, type ViewerItem } from '@/components/RxImage'
 import { Screen, useBack } from '@/components/layout'
 import { BackChevron, Skeleton } from '@/components/ui'
@@ -106,7 +107,7 @@ export function ResumoScreen() {
       </div>
       <div className="flex flex-col gap-6 px-[22px] pt-[22px] pb-[120px] print:px-0 print:pt-0 print:pb-0">
         <div className="flex items-center gap-3 border-b border-dash pb-[18px]">
-          <div className="box-border size-[52px] flex-none rounded-full border border-line bg-sand p-2.5" />
+          <DentraIcon size={52} />
           <div className="flex flex-col gap-0.5">
             <div className="text-[11px] tracking-[.3em] text-terra-mid">FICHA ANAMNESE · {A.procUpper}</div>
             <div className="font-serif text-[19px] font-semibold">{prof?.nome}</div>
