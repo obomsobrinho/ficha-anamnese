@@ -386,7 +386,9 @@ export default function RxEditor({
     <div
       ref={rootRef}
       data-tab={view.tab}
-      className="rx-editor pt-safe pb-safe fixed inset-0 z-50 flex flex-col bg-white"
+      className="rx-editor pt-safe fixed inset-0 z-50 flex flex-col bg-white"
+      // Only the real home-indicator inset: the app-wide 34px minimum left a blank strip in the browser.
+      style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       <header className="border-line flex h-13 flex-none items-center justify-between border-b px-2">
         <button
@@ -514,7 +516,7 @@ export default function RxEditor({
               type="button"
               onClick={() => openTab(t.id)}
               className={
-                'flex h-14 cursor-pointer flex-col items-center justify-center gap-0.5 border-0 bg-transparent text-xs ' +
+                'flex h-12 cursor-pointer flex-col items-center justify-center gap-0 border-0 bg-transparent text-xs ' +
                 (on ? 'text-terra font-medium' : 'text-muted')
               }
             >
