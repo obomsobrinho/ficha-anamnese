@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { errorToast, savedToast } from '@/lib/feedback'
+import { originalPath } from '@/lib/image'
 import { todayBR, todayISO } from '@/lib/dates'
 import { deriveStatus } from '@/lib/status'
 import { supabase } from '@/lib/supabase'
@@ -158,7 +159,7 @@ export function useDeleteAtendimento() {
   const m = useMutation({
     mutationFn: async (a: Atendimento) => {
       const { data: files } = await supabase.from('arquivos').select('caminho').eq('atendimento_id', a.id)
-      const paths = (files || []).map((f: { caminho: string }) => f.caminho)
+      const paths = (files || []).flatMap((f: { caminho: string }) => [f.caminho, originalPath(f.caminho)])
       if (paths.length) await supabase.storage.from('arquivos').remove(paths)
       const { error } = await supabase.from('atendimentos').delete().eq('id', a.id)
       if (error) throw error

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { errorToast } from '@/lib/feedback'
-import { resizeToJpeg } from '@/lib/image'
+import { isEdited, originalPath, resizeToJpeg } from '@/lib/image'
 import { todayISO } from '@/lib/dates'
 import { supabase } from '@/lib/supabase'
 import type { Arquivo, ArquivoTipo } from '@/types'
@@ -89,8 +89,9 @@ export function useUploadArquivo() {
       )
     },
     onError: (_e, v) => {
-      qc.setQueryData<(Arquivo & { failed?: boolean; pending?: boolean })[]>(aKeys.arquivos(uid, v.atendimentoId), (l) =>
-        l?.map((x) => (x.id === v.id ? { ...x, pending: false, failed: true } : x)),
+      qc.setQueryData<(Arquivo & { failed?: boolean; pending?: boolean })[]>(
+        aKeys.arquivos(uid, v.atendimentoId),
+        (l) => l?.map((x) => (x.id === v.id ? { ...x, pending: false, failed: true } : x)),
       )
       errorToast('Não foi possível enviar a imagem.', () => m.mutate(v))
     },
@@ -112,12 +113,14 @@ export function useDeleteArquivo() {
   const qc = useQueryClient()
   const m = useMutation({
     mutationFn: async (a: Arquivo) => {
-      await supabase.storage.from(BUCKET).remove([a.caminho])
+      await supabase.storage.from(BUCKET).remove([...new Set([a.caminho, originalPath(a.caminho)])])
       const { error } = await supabase.from('arquivos').delete().eq('id', a.id)
       if (error) throw error
     },
     onMutate: (a) =>
-      qc.setQueryData<Arquivo[]>(aKeys.arquivos(uid, a.atendimento_id), (l) => l?.filter((x) => x.id !== a.id)),
+      qc.setQueryData<Arquivo[]>(aKeys.arquivos(uid, a.atendimento_id), (l) =>
+        l?.filter((x) => x.id !== a.id),
+      ),
     onError: (_e, a) => errorToast('Não foi possível remover a imagem.', () => m.mutate(a)),
     onSettled: (_d, _e, a) => qc.invalidateQueries({ queryKey: aKeys.arquivos(uid, a.atendimento_id) }),
   })
@@ -145,4 +148,47 @@ export function useSaveNotas() {
     onSettled: (_d, _e, v) => qc.invalidateQueries({ queryKey: aKeys.arquivos(uid, v.atendimentoId) }),
   })
   return m
+}
+
+/** Points the row at a new edited image (blob) or back at the original (blob = null). */
+export function useEditArquivo() {
+  const uid = useUid()
+  const qc = useQueryClient()
+  const m = useMutation({
+    mutationFn: async (v: { a: Arquivo; blob: Blob | null; caminho: string }) => {
+      if (v.blob) {
+        const up = await supabase.storage
+          .from(BUCKET)
+          .upload(v.caminho, v.blob, { contentType: 'image/jpeg' })
+        if (up.error) throw up.error
+      }
+      const { error } = await supabase.from('arquivos').update({ caminho: v.caminho }).eq('id', v.a.id)
+      if (error) throw error
+      if (isEdited(v.a.caminho)) await supabase.storage.from(BUCKET).remove([v.a.caminho])
+    },
+    onMutate: (v) => {
+      if (v.blob) localPreviews.set(v.a.id, URL.createObjectURL(v.blob))
+      else localPreviews.delete(v.a.id)
+      qc.setQueryData<(Arquivo & { pending?: boolean })[]>(aKeys.arquivos(uid, v.a.atendimento_id), (l) =>
+        l?.map((x) => (x.id === v.a.id ? { ...x, caminho: v.caminho, pending: !!v.blob } : x)),
+      )
+    },
+    onSuccess: (_d, v) =>
+      qc.setQueryData<(Arquivo & { pending?: boolean })[]>(aKeys.arquivos(uid, v.a.atendimento_id), (l) =>
+        l?.map((x) => (x.id === v.a.id ? { ...x, pending: false } : x)),
+      ),
+    onError: (_e, v) => {
+      qc.setQueryData<Arquivo[]>(aKeys.arquivos(uid, v.a.atendimento_id), (l) =>
+        l?.map((x) => (x.id === v.a.id ? v.a : x)),
+      )
+      errorToast('Não foi possível salvar a edição.', () => m.mutate(v))
+    },
+    onSettled: (_d, _e, v) => qc.invalidateQueries({ queryKey: aKeys.arquivos(uid, v.a.atendimento_id) }),
+  })
+  return {
+    ...m,
+    saveEdit: (a: Arquivo, blob: Blob) =>
+      m.mutate({ a, blob, caminho: originalPath(a.caminho).replace(/\.jpg$/, `-ed-${Date.now()}.jpg`) }),
+    restore: (a: Arquivo) => m.mutate({ a, blob: null, caminho: originalPath(a.caminho) }),
+  }
 }

@@ -1,10 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { errorToast, savedToast } from '@/lib/feedback'
+import { originalPath } from '@/lib/image'
 import { supabase } from '@/lib/supabase'
 import { blankDados, type Atendimento, type Paciente, type PacienteDados } from '@/types'
 
-export type AtendimentoLite = Pick<Atendimento, 'id' | 'paciente_id' | 'procedimento' | 'dentes' | 'status' | 'iniciado_em' | 'created_at'>
+export type AtendimentoLite = Pick<
+  Atendimento,
+  'id' | 'paciente_id' | 'procedimento' | 'dentes' | 'status' | 'iniciado_em' | 'created_at'
+>
 export type PacienteRow = Paciente & { atendimentos: AtendimentoLite[] }
 
 const SELECT =
@@ -33,7 +37,10 @@ export function usePacientes() {
     queryKey: keys.pacientes(uid),
     enabled: !!uid,
     queryFn: async () => {
-      const { data, error } = await supabase.from('pacientes').select(SELECT).order('created_at', { ascending: false })
+      const { data, error } = await supabase
+        .from('pacientes')
+        .select(SELECT)
+        .order('created_at', { ascending: false })
       if (error) throw error
       return (data as unknown as PacienteRow[]).map(normalize)
     },
@@ -127,7 +134,7 @@ export function useDeletePaciente() {
         .from('arquivos')
         .select('caminho,atendimentos!inner(paciente_id)')
         .eq('atendimentos.paciente_id', id)
-      const paths = (files || []).map((f: { caminho: string }) => f.caminho)
+      const paths = (files || []).flatMap((f: { caminho: string }) => [f.caminho, originalPath(f.caminho)])
       if (paths.length) await supabase.storage.from('arquivos').remove(paths)
       const { error } = await supabase.from('pacientes').delete().eq('id', id)
       if (error) throw error

@@ -25,3 +25,7 @@ export async function resizeToJpeg(file: File, max = 1600, quality = 0.8): Promi
     URL.revokeObjectURL(url)
   }
 }
+
+/** Edited x-rays live next to the original as `{id}-ed-{ts}.jpg`; the original `{id}.jpg` is never touched. */
+export const originalPath = (caminho: string) => caminho.replace(/-ed-\d+\.jpg$/, '.jpg')
+export const isEdited = (caminho: string) => originalPath(caminho) !== caminho
